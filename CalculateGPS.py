@@ -1,10 +1,18 @@
-import time
-start = time.time()
+import datetime
 import ephem
 import time
 import pickle
+import GetTLEs
+
+
+
+GetTLEs.getTLEs()
+lastTLEupdate = datetime.date.today()
+print(datetime.date.today())
+
 
 while True:
+
     satCoords = []
 
     with open('TLEs.txt', 'rb') as TLEs:
@@ -27,5 +35,7 @@ while True:
     with open('SatCoords.txt', 'wb') as sc:
         pickle.dump(satCoords, sc)
 
+    if lastTLEupdate != datetime.date.today():
+        GetTLEs.getTLEs()
+        lastTLEupdate = datetime.date.today()
 
-    time.sleep(0.77)

@@ -31,4 +31,4 @@ def filteredGPS(observer_coord, TLEs):
         #print(satCoords[0])
         print(len(satCoords))
 
-filteredGPS((-22.9068, -43.1729), TLElist)
+filteredGPS((40.7128, -74.0060), TLElist)

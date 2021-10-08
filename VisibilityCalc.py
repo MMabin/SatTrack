@@ -26,6 +26,4 @@ def visible(observer, sat):
 
     minimumVisibleHeight = 6371000 * ((1 / math.cos(angle)) - 1)
     los = sat[3] > minimumVisibleHeight
-    return los and not sat[4] and sat[3] < 800000
-
-
+    return los and not sat[4] and sat[3] < 700000

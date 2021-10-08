@@ -51,6 +51,9 @@ def getTLEs():
 
         # this query requests TLES of LEOs
         resp = session.get(requestLEOs)
+        if resp.status_code != 200:
+            print(resp)
+            raise MyError(resp, "GET fail on request for Starlink satellites")
 
 
         # converts response TLES into a list of lists
@@ -62,15 +65,8 @@ def getTLEs():
                 TLE.append(respLines[j])
             TLElist.append(TLE)
 
-        # Dump TLEs to file
-        with open('TLEs.txt', 'wb') as TLEs:
-            pickle.dump(TLElist, TLEs)
-
-        if resp.status_code != 200:
-            print(resp)
-            raise MyError(resp, "GET fail on request for Starlink satellites")
-
-        print(len(TLElist))
-
-
         session.close()
+        print(TLElist[0])
+        return TLElist
+
+

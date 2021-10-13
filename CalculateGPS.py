@@ -23,12 +23,15 @@ def filteredGPS(observer_coord, TLEs):
             tle_rec = ephem.readtle(name, line1, line2)
             tle_rec.compute()
 
-            satCoord = [name, 57.2958*tle_rec.sublat, 57.2958*tle_rec.sublong,
-                        tle_rec.elevation, tle_rec.eclipsed]
+            try:
+                satCoord = [name, 57.2958*tle_rec.sublat, 57.2958*tle_rec.sublong,
+                            tle_rec.elevation, tle_rec.eclipsed]
+            except:
+                pass
 
             if visible(observer_coord, satCoord):
                 satCoords.append(satCoord)
-        #print(satCoords[0])
+        print(satCoords[0])
         print(len(satCoords))
 
 filteredGPS((40.7128, -74.0060), TLElist)

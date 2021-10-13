@@ -68,5 +68,3 @@ def getTLEs():
         session.close()
         print(TLElist[0])
         return TLElist
-
-

@@ -66,5 +66,5 @@ def getTLEs():
             TLElist.append(TLE)
 
         session.close()
-        print(TLElist[0])
+        #print(TLElist[0])
         return TLElist

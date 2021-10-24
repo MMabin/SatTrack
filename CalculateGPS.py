@@ -1,12 +1,10 @@
 import ephem
-import GetTLEs
 from VisibilityCalc import visible
-
-
-#TLElist = GetTLEs.getTLEs()
+import json
 
 
 def filteredGPS(observer_coord, TLEs):
+    
     satCoords = []
 
     #print(TLElist[1])
@@ -28,8 +26,9 @@ def filteredGPS(observer_coord, TLEs):
 
         if visible(observer_coord, satCoord):
             satCoords.append(satCoord)
+    satCoords = json.dumps(satCoords)
     return satCoords
     # print(satCoords[0])
     # print(len(satCoords))
 
-#print(len(filteredGPS((40.7128, -96.7026), TLElist)))
+#print(len(filteredGPS((40.7128, -96.7026))))

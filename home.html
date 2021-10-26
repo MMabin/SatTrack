@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="">
-        <style>
-        </style>
-    </head>
+  <head>
+    <title>Simple Map</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
     <body>
         <h1>Tracking Satellites</h1>
 
-        <label for="fname">Location (GPS or Zip)</label>
-        <input type="text" id="location" name="location">
+        <label for="lat">Latitude</label>
+        <input type="number" id="lat" name="lat">
+
+        <label for="long">Longitude</label>
+        <input type="number" id="long" name="long">
 
         <button id="sendGPS" onclick='sendLocation()'>Submit Location</button>
-        <script src='script.js'></script>
+        
         <div id="map"></div>
+        <script src='script.js'></script>
+        
     </body>
 </html>

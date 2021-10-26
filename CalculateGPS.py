@@ -1,11 +1,11 @@
 import ephem
-from VisibilityCalc import visible
+from VisibilityCalc import get_bearings_visible_sats
 import json
 
 
-def filteredGPS(observer_coord, TLEs):
+def filteredSatBearings(observer_coord, TLEs):
     
-    satCoords = []
+    sats = []
 
     #print(TLElist[1])
 
@@ -19,16 +19,17 @@ def filteredGPS(observer_coord, TLEs):
         tle_rec.compute()
 
         try:
-            satCoord = [name, 57.2958*tle_rec.sublat, 57.2958*tle_rec.sublong,
-                        tle_rec.elevation, tle_rec.eclipsed]
+            satCoord = {'name': name, 'lat': 57.2958*tle_rec.sublat, 'long': 57.2958*tle_rec.sublong,
+                        'height': tle_rec.elevation, 'eclipsed': tle_rec.eclipsed}
         except:
             pass
 
-        if visible(observer_coord, satCoord):
-            satCoords.append(satCoord)
-    satCoords = json.dumps(satCoords)
-    return satCoords
-    # print(satCoords[0])
-    # print(len(satCoords))
+        bearing = get_bearings_visible_sats(observer_coord, satCoord)
 
-#print(len(filteredGPS((40.7128, -96.7026))))
+        if bearing:
+            sats.append(bearing)
+        
+        
+
+    sats = json.dumps(sats)
+    return sats

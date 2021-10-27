@@ -55,7 +55,7 @@ def get_bearings_visible_sats(observer, sat):
         D = math.sqrt(A**2+B**2+2*A*B*math.sin(angle))
         incline= numpy.degrees(math.asin(B*math.cos(angle)/D))
 
-        if incline<5:
+        if incline<15:
             return False
 
         return {'name': sat['name'], 'bearing': brng, 'incline': incline}

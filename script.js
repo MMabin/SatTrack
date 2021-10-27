@@ -10,7 +10,65 @@ function sendLocation() {
         socket.send(JSON.stringify(observer))
     }
     socket.onmessage = function (event) {
-        let msg = JSON.parse(event.data)
-        console.log(msg)
+        let satellites = JSON.parse(event.data)
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        drawCircle(context)
+        for (sat of satellites){
+            let radians = sat['bearing']*Math.PI/180;
+
+            let x = (300+200*Math.sin(radians));
+            let y = (250-200*Math.cos(radians));
+
+            drawPoint(context,x,y,sat['name']+' '+sat['incline'].toFixed(2), 'green',2)
+        }
+        console.log(satellites[0])
+
     }    
 }
+
+
+function drawPoint(context, x, y, label, color, size) {
+    if (color == null) {
+      color = '#000';
+  }
+  if (size == null) {
+      size = 5;
+  }
+
+    // to increase smoothing for numbers with decimal part
+    var pointX = Math.round(x);
+  var pointY = Math.round(y);
+
+  context.beginPath();
+  context.fillStyle = color;
+  context.arc(pointX, pointY, size, 0 * Math.PI, 2 * Math.PI);
+  context.fill();
+
+    if (label) {
+      var textX = pointX;
+        var textY = Math.round(pointY - size - 3);
+    
+      context.font = 'Italic 8px Arial';
+      context.fillStyle = 'black';
+      context.textAlign = 'center';
+      context.fillText(label, textX, textY);
+  }
+}
+
+function drawCircle(context){
+    context.beginPath();
+    context.arc(300,250,200,0,2*Math.PI);
+    context.stroke();
+    drawPoint(context, 300, 250, "Ta aqui", 'red', 5)
+}
+
+
+
+var canvas = document.querySelector('#map');
+var context = canvas.getContext('2d');
+
+drawCircle(context);
+
+// TO CLEAR CANVAS context.clearRect(0, 0, canvas.width, canvas.height);
+
+// 40.8136 -96.7026

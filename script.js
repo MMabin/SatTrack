@@ -12,12 +12,13 @@ function sendLocation() {
     socket.onmessage = function (event) {
         let satellites = JSON.parse(event.data)
         context.clearRect(0, 0, canvas.width, canvas.height)
-        drawCircle(context)
+        drawObsLoc(context)
         for (sat of satellites){
             let radians = sat['bearing']*Math.PI/180;
+            let incline = sat['incline']*Math.PI/180;
 
-            let x = (300+200*Math.sin(radians));
-            let y = (250-200*Math.cos(radians));
+            let x = (300+250*Math.cos(incline)*Math.sin(radians));
+            let y = (250-250*Math.cos(incline)*Math.cos(radians));
 
             drawPoint(context,x,y,sat['name']+' '+sat['incline'].toFixed(2), 'green',2)
         }
@@ -55,19 +56,16 @@ function drawPoint(context, x, y, label, color, size) {
   }
 }
 
-function drawCircle(context){
-    context.beginPath();
-    context.arc(300,250,200,0,2*Math.PI);
-    context.stroke();
-    drawPoint(context, 300, 250, "Ta aqui", 'red', 5)
+function drawObsLoc(context){    
+    drawPoint(context, 300, 250, "Ta aqui", 'red', 5);
 }
 
 
 
 var canvas = document.querySelector('#map');
 var context = canvas.getContext('2d');
+drawObsLoc(context);
 
-drawCircle(context);
 
 // TO CLEAR CANVAS context.clearRect(0, 0, canvas.width, canvas.height);
 

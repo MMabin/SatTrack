@@ -5,7 +5,7 @@ import GetTLEs
 import json
 import threading
 
-port = 8002
+port = 8080
 
 print('Server listening on port '+ str(port))
 
@@ -41,8 +41,12 @@ async def echo(websocket, path):
     except websockets.exceptions.ConnectionClosedOK as e:
         pass
 
-async def main():
-    async with websockets.serve(echo, 'localhost', port):
-        await asyncio.Future()
+start_server = websockets.serve(echo, '0.0.0.0', port)
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()
+# async def main():
+#     async with websockets.serve(echo, 'localhost', port):
+#         await asyncio.Future()
+#     a = 5+5
 
-asyncio.run(main())
+# asyncio.run(main())

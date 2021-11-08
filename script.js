@@ -5,7 +5,7 @@ function sendLocation() {
         return
     }
     
-    let socket = new WebSocket('ws://127.0.0.1:8002');
+    let socket = new WebSocket('ws://18.222.139.190:8080');
     socket.onopen = function (event) {                
         socket.send(JSON.stringify(observer))
     }

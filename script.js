@@ -1,10 +1,55 @@
-function sendLocation() {
-    let observer= {lat: document.getElementById('lat').value, long: document.getElementById('long').value}
+bindSubmits();
+
+function bindSubmits() {
+    document.getElementById('submitGPS').addEventListener('click', GPSwrap);
+    document.getElementById('submitZipcode').addEventListener('click', zipWrap);
+}
+
+function zipWrap() {
+    submitByZip();
+}
+
+function GPSwrap() {
+    submitByGPS();
+}
+
+function removeSubmits() {
+    document.getElementById('submitGPS').removeEventListener('click', GPSwrap);
+    document.getElementById('submitZipcode').removeEventListener('click', zipWrap);
+}
+
+
+function submitByZip() {
+    alert('zip');
+    let zipcode = document.getElementById('zipcode').value;
+    var req = new XMLHttpRequest();
+    let url = 'https://service-361.herokuapp.com/locate/'+zipcode.toString();
+
+    req.open('GET', url, true);
+    req.send()
+    req.addEventListener('load', function(){
+        if (req.status >= 200 && req.status < 400) {
+            let response = JSON.parse(req.responseText);
+            let observer = {lat: response[zipcode]['lat'], long: response[zipcode]['lng']}
+            sendLocation(observer);
+            //call send location here
+        }
+    })
+}
+
+function submitByGPS(){
+    alert('gps')
+    let observer= {lat: document.getElementById('lat').value, long: document.getElementById('long').value};
     if (observer.lat == '' || observer.long == ''){
         alert("Preenche os dois por favor.")
         return
     }
-    
+    sendLocation(observer);
+}
+
+
+function sendLocation(observer) {
+    removeSubmits();
     let socket = new WebSocket('ws://18.222.139.190:8080');
     socket.onopen = function (event) {                
         socket.send(JSON.stringify(observer))

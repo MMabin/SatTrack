@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from geopy.distance import EARTH_RADIUS, distance
 import math
 import numpy

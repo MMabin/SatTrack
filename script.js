@@ -20,7 +20,6 @@ function removeSubmits() {
 
 
 function submitByZip() {
-    alert('zip');
     let zipcode = document.getElementById('zipcode').value;
     var req = new XMLHttpRequest();
     let url = 'https://service-361.herokuapp.com/locate/'+zipcode.toString();
@@ -38,7 +37,6 @@ function submitByZip() {
 }
 
 function submitByGPS(){
-    alert('gps')
     let observer= {lat: document.getElementById('lat').value, long: document.getElementById('long').value};
     if (observer.lat == '' || observer.long == ''){
         alert("Preenche os dois por favor.")

@@ -10,8 +10,11 @@ port = 8080
 print('Server listening on port '+ str(port))
 
 async def sendSats(websocket, observer, TLEs):
-    while True:
+    limit = 25
+    for i in range(limit):
         await websocket.send(filteredSatBearings(observer, TLEs))
+        if i == limit-1:
+            websocket.close()
         
 
 def intermediate_function(websocket, observer, TLEs):
@@ -27,7 +30,7 @@ def intermediate_function(websocket, observer, TLEs):
 async def echo(websocket, path):
     print("A client just connected")
     TLEs = GetTLEs.getTLEs()
-    
+
     try:
         async for message in websocket:
             message = json.loads(message)

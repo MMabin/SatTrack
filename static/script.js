@@ -20,7 +20,6 @@ function removeSubmits() {
 
 
 function submitByZip() {
-    alert('zip');
     let zipcode = document.getElementById('zipcode').value;
     var req = new XMLHttpRequest();
     let url = 'https://service-361.herokuapp.com/locate/'+zipcode.toString();
@@ -38,7 +37,6 @@ function submitByZip() {
 }
 
 function submitByGPS(){
-    alert('gps')
     let observer= {lat: document.getElementById('lat').value, long: document.getElementById('long').value};
     if (observer.lat == '' || observer.long == ''){
         alert("Preenche os dois por favor.")
@@ -50,12 +48,17 @@ function submitByGPS(){
 
 function sendLocation(observer) {
     removeSubmits();
-    let socket = new WebSocket('ws://18.222.139.190:8080');
+    let socket = new WebSocket('ws://3.143.220.142:8080');
     socket.onopen = function (event) {                
         socket.send(JSON.stringify(observer))
     }
     socket.onmessage = function (event) {
-        let satellites = JSON.parse(event.data)
+        drawSats(event);
+    }    
+}
+
+function drawSats (data) {
+    let satellites = JSON.parse(data.data)
         context.clearRect(0, 0, canvas.width, canvas.height)
         drawObsLoc(context)
         for (sat of satellites){
@@ -64,32 +67,35 @@ function sendLocation(observer) {
 
             let x = (300+250*Math.cos(incline)*Math.sin(radians));
             let y = (250-250*Math.cos(incline)*Math.cos(radians));
-
-            drawPoint(context,x,y,sat['name']+' '+sat['incline'].toFixed(2), 'green',2)
+            let showInfo = document.getElementById('showInfo').checked;
+            if (showInfo) {
+                drawPoint(context,x,y,sat['name']+' '+sat['incline'].toFixed(2), 'green',2)
+            }
+            else {
+                drawPoint(context,x,y,null,'green',2)
+            }
         }
         console.log(satellites[0])
 
-    }    
 }
-
 
 function drawPoint(context, x, y, label, color, size) {
     if (color == null) {
       color = '#000';
   }
-  if (size == null) {
+    if (size == null) {
       size = 5;
   }
 
     // to increase smoothing for numbers with decimal part
     var pointX = Math.round(x);
-  var pointY = Math.round(y);
+    var pointY = Math.round(y);
 
   context.beginPath();
   context.fillStyle = color;
   context.arc(pointX, pointY, size, 0 * Math.PI, 2 * Math.PI);
   context.fill();
-
+  
     if (label) {
       var textX = pointX;
         var textY = Math.round(pointY - size - 3);
@@ -102,7 +108,7 @@ function drawPoint(context, x, y, label, color, size) {
 }
 
 function drawObsLoc(context){    
-    drawPoint(context, 300, 250, "Ta aqui", 'red', 5);
+    drawPoint(context, 300, 250, "You are here", 'red', 5);
 }
 
 

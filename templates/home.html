@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>🔭Satellite Tracker</title>
+    <title>🔭Satellite View</title>
     <link rel="stylesheet" type="text/css" href="/static/style.css" />
   </head>
     <body>
-        <h1>Tracking Satellites</h1>
+        <h1>Satellite Tracker</h1>
           <div>
             <label for="lat">Latitude</label>
             <input type="number" id="lat" name="lat" value=40.8136>
@@ -18,6 +18,11 @@
             <label for="zipcode">Zipcode</label>
             <input type="number" id="zipcode" name="zipcode" value=68516>
             <button id="submitZipcode">Submit Zipcode</button>
+          </div>
+          <div>
+            <label for="showInfo">
+              <input type="checkbox" id="showInfo" name="showInfo" value="yes">Show Satellite Info 
+           </label>
           </div>
         
         <div id="map_holder">

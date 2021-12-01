@@ -3,17 +3,13 @@ from VisibilityCalc import get_bearings_visible_sats
 import json
 
 
-def filteredSatBearings(observer_coord, TLEs):
-    
+def filteredSatBearings(observer_coord, TLEs):    
     sats = []
-
-    #print(TLElist[1])
 
     for TLE in TLEs:
         name = TLE[0]
         line1 = TLE[1]
         line2 = TLE[2]
-        # print(name, line1, line2)
 
         tle_rec = ephem.readtle(name, line1, line2)
         tle_rec.compute()
@@ -27,9 +23,7 @@ def filteredSatBearings(observer_coord, TLEs):
         bearing = get_bearings_visible_sats(observer_coord, satCoord)
 
         if bearing:
-            sats.append(bearing)
-        
-        
+            sats.append(bearing)       
 
     sats = json.dumps(sats)
     return sats

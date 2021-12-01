@@ -21,7 +21,7 @@ function removeSubmits() {
 
 function submitByZip() {
     let zipcode = document.getElementById('zipcode').value;
-    var req = new XMLHttpRequest();
+    let req = new XMLHttpRequest();
     let url = 'https://service-361.herokuapp.com/locate/'+zipcode.toString();
 
     req.open('GET', url, true);
@@ -76,7 +76,6 @@ function drawSats (data) {
             }
         }
         console.log(satellites[0])
-
 }
 
 function drawPoint(context, x, y, label, color, size) {
@@ -88,8 +87,8 @@ function drawPoint(context, x, y, label, color, size) {
   }
 
     // to increase smoothing for numbers with decimal part
-    var pointX = Math.round(x);
-    var pointY = Math.round(y);
+    let pointX = Math.round(x);
+    let pointY = Math.round(y);
 
   context.beginPath();
   context.fillStyle = color;
@@ -97,8 +96,8 @@ function drawPoint(context, x, y, label, color, size) {
   context.fill();
   
     if (label) {
-      var textX = pointX;
-        var textY = Math.round(pointY - size - 3);
+      let textX = pointX;
+        let textY = Math.round(pointY - size - 3);
     
       context.font = 'Italic 8px Arial';
       context.fillStyle = 'black';
@@ -110,7 +109,6 @@ function drawPoint(context, x, y, label, color, size) {
 function drawObsLoc(context){    
     drawPoint(context, 300, 250, "You are here", 'red', 5);
 }
-
 
 
 var canvas = document.querySelector('#map');
